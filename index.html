@@ -160,6 +160,7 @@ li#left {
             <li><a href="#" id="gradient" class="on">渐变</a></li>
             <li><a href="#" id="color" class="on">着色</a></li>
             <li><a href="#" id="valentineify" class="">情人节风格</a></li>
+            <li><a href="#" id="use24Hour" class="on">24小时制</a></li>
             <li class="group"><span>鼠标按下：爆炸并排斥</span></li>
             <li><span>鼠标按下 + Shift键：爆炸并吸引</span></li>
             <li><span>向上箭头：增加粒子大小</span></li>
@@ -187,6 +188,7 @@ var Clock = (function() {
         valentine = false, // valentine-ify it for a bit?
         msgTime = 100, // time to show a message before returning to clock
         updateColor = true, // update color of gradient / particles with time?
+        use24Hour = true, // 使用24小时制（默认）
         width = 800; // canvas width
     
     // Constants
@@ -276,7 +278,7 @@ var Clock = (function() {
         // clear out text
         ctx.clearRect(0, 0, width, height);
 
-        var time = getTime(true);
+        var time = getTime(!use24Hour);
 
         textSize = 140;
 
@@ -503,7 +505,8 @@ var Clock = (function() {
                 quiverBtn = document.getElementById('quivers'),
                 gradientBtn = document.getElementById('gradient'),
                 valentineifyBtn = document.getElementById('valentineify'),
-                colorBtn = document.getElementById('color');
+                colorBtn = document.getElementById('color'),
+                use24HourBtn = document.getElementById('use24Hour');
         
             toggleOptions.innerHTML = offMsg;
         
@@ -564,6 +567,17 @@ var Clock = (function() {
                 } else {
                     colorBtn.className = 'on';
                     updateColor = true;
+                }
+            }, false);
+            
+            use24HourBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if(use24HourBtn.className === 'on') {
+                    use24HourBtn.className = '';
+                    use24Hour = false;
+                } else {
+                    use24HourBtn.className = 'on';
+                    use24Hour = true;
                 }
             }, false);
         
